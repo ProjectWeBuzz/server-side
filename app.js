@@ -21,6 +21,18 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+//Projects Page Routes
+const projectPageRoutes = require("./routes/project.routes");
+app.use("/projects", projectPageRoutes);
+
+//Colab Finder Page Routes
+const colabPageRoutes = require("./routes/colabFinder.routes");
+app.use("/colab", colabPageRoutes);
+
+//Private Messaging Routes
+const messageRoutes = require("./routes/message.routes");
+app.use("/message", messageRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 

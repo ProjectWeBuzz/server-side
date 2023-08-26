@@ -19,17 +19,28 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
-    projects: [{
-      type: Schema.Types.ObjectId,
-      ref: "Project" }],
+    projects: {
+      type: [Schema.Types.ObjectId],
+      ref: "Project" 
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    photo: {
+      type:String,
+      default: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+    },
+    sociallinks: {
+      type: [Strings],
+    }
+
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
-
-//Comment
 
 const User = model("User", userSchema);
 

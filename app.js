@@ -2,6 +2,10 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
+const databaseUrl = process.env.DATABASE_URL || 'mongodb://localhost/WeBuzz';
+const secretKey = process.env.mysecretkey;
+
+
 // ℹ️ Connects to the database
 require("./db");
 
@@ -22,16 +26,16 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 //Projects Page Routes
-const projectPageRoutes = require("./routes/project.routes");
-app.use("/projects", projectPageRoutes);
+// const projectPageRoutes = require("./routes/project.routes");
+// app.use("/projects", projectPageRoutes);
 
-//Colab Finder Page Routes
-const colabPageRoutes = require("./routes/colabFinder.routes");
-app.use("/colab", colabPageRoutes);
+// //Colab Finder Page Routes
+// const colabPageRoutes = require("./routes/colabFinder.routes");
+// app.use("/colab", colabPageRoutes);
 
-//Private Messaging Routes
-const messageRoutes = require("./routes/message.routes");
-app.use("/message", messageRoutes);
+// //Private Messaging Routes
+// const messageRoutes = require("./routes/message.routes");
+// app.use("/message", messageRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

@@ -3,7 +3,7 @@
 require("dotenv").config();
 
 const databaseUrl = process.env.DATABASE_URL || 'mongodb://localhost/WeBuzz';
-const secretKey = process.env.mysecretkey;
+const secretKey = process.env.TOKEN_SECRET;
 
 
 // ℹ️ Connects to the database
@@ -12,6 +12,8 @@ require("./db");
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
 const express = require("express");
+
+const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const app = express();
 
@@ -25,9 +27,9 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
-//Projects Page Routes
-// const projectPageRoutes = require("./routes/project.routes");
-// app.use("/projects", projectPageRoutes);
+const projectRoutes = require("./routes/projects.routes");
+app.use("/api", isAuthenticated, projectRoutes);
+
 
 // //Colab Finder Page Routes
 // const colabPageRoutes = require("./routes/colabFinder.routes");

@@ -17,11 +17,11 @@ const projectSchema = new Schema(
       lowercase: true,
     },
     images: {
-      type: String,
+      type: [String],
       required: false
     },
     tags: {
-      type: [Strings],
+      type: [String],
       validate: {
         validator: function (array){
             return array.length <=5;
@@ -40,7 +40,7 @@ const projectSchema = new Schema(
       enum: ['painting', 'digital design']
     },
     sociallinksproject: {
-      type: [Strings],
+      type: [String],
     },
     creationdate: {
         type: Date

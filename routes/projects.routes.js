@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const app = express();
+app.use(express.json());
 const mongoose = require("mongoose");
+router.use(express.json());
 
 const Project = require("../models/Project.model");
 
@@ -8,11 +11,11 @@ const Project = require("../models/Project.model");
 //  POST /api/projects  -  Creates a new project
 
 router.post("/projects", (req, res, next) => {
-    const { title, description, images, tags, technologies, media, sociallinksproject, creationdate, private } = req.body;
-    console.log("POST request to /api/projects received");
-    Project.create({ title, description, images, tags, technologies, media, sociallinksproject, creationdate, private})
+    const { title, description, tags, sociallinksproject, creationdate, private } = req.body;
+    Project.create({ title, description, tags, sociallinksproject, creationdate, private})
       .then((response) => res.json(response))
       .catch((err) => res.json(err));
+      console.log("req.body",req.body)
   });
 
 

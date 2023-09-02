@@ -28,7 +28,11 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const projectRoutes = require("./routes/projects.routes");
-app.use("/api", isAuthenticated, projectRoutes);
+app.use("/api", projectRoutes);
+
+// REMOVED THE isAuthenticated from the route projects!!
+// const projectRoutes = require("./routes/projects.routes");
+// app.use("/api", isAuthenticated, projectRoutes);
 
 
 // //Colab Finder Page Routes

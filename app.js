@@ -24,12 +24,17 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
+const profileRouter = require('./routes/profile.routes');
+app.use('/api', profileRouter);
+
 const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
+app.use("/auth", authRoutes );
 
 const projectRoutes = require("./routes/projects.routes");
-app.use("/api", isAuthenticated, projectRoutes);
+app.use("/api", projectRoutes);
 
+const profileRoutes = require("./routes/profile.routes")
+app.use("/api", profileRoutes);
 
 // //Colab Finder Page Routes
 // const colabPageRoutes = require("./routes/colabFinder.routes");

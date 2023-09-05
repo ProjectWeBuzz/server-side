@@ -7,15 +7,16 @@ router.use(express.json());
 
 const Project = require("../models/Project.model");
 
+const fileUploader = require('../config/cloudinary.config');
 
 //  POST /api/projects  -  Creates a new project
 
-router.post("/projects", (req, res, next) => {
-    const { title, description, tags, sociallinksproject, creationdate, private } = req.body;
-    Project.create({ title, description, tags, sociallinksproject, creationdate, private})
+router.post("/projects", fileUploader.single('file'), (req, res, next) => {
+    console.log(req.body, req.file)
+    const { title, description, tags, images, sociallinksproject, creationdate, private } = req.body;
+    Project.create({ title, description, tags, images, sociallinksproject, creationdate, private})
       .then((response) => res.json(response))
       .catch((err) => res.json(err));
-      console.log("req.body",req.body)
   });
 
 

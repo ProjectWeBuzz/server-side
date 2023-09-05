@@ -16,10 +16,10 @@ const projectSchema = new Schema(
       required: [true, "Description is required."],
       lowercase: true,
     },
-    // images: {
-    //   type: [String],
-    //   required: false
-    // },
+    images: {
+      type: String,
+      required: false
+    },
     tags: {
       type: [String],
       // validate: {

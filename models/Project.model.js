@@ -22,6 +22,7 @@ const projectSchema = new Schema(
     },
     tags: {
       type: [String],
+      maxlength: 50,
       // validate: {
       //   validator: function (array){
       //       return array.length <=5;

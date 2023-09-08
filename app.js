@@ -2,8 +2,8 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
-const databaseUrl = process.env.DATABASE_URL || 'mongodb://localhost/WeBuzz';
-const secretKey = process.env.TOKEN_SECRET;
+// const databaseUrl = process.env.DATABASE_URL || 'mongodb://localhost/WeBuzz';
+// const secretKey = process.env.TOKEN_SECRET;
 
 
 // ℹ️ Connects to the database
@@ -13,7 +13,7 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
-const { isAuthenticated } = require("./middleware/jwt.middleware");
+// const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const app = express();
 
@@ -24,8 +24,8 @@ require("./config")(app);
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
-const profileRouter = require('./routes/profile.routes');
-app.use('/api', profileRouter);
+const profileRoutes = require('./routes/profile.routes');
+app.use('/profile', profileRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes );
@@ -35,12 +35,7 @@ app.use("/api", projectRoutes);
 
 
 // REMOVED THE isAuthenticated from the route projects!!
-// const projectRoutes = require("./routes/projects.routes");
 // app.use("/api", isAuthenticated, projectRoutes);
-
-
-const profileRoutes = require("./routes/profile.routes")
-app.use("/api", profileRoutes);
 
 // //Colab Finder Page Routes
 // const colabPageRoutes = require("./routes/colabFinder.routes");

@@ -1,15 +1,18 @@
 const { Schema, model } = require("mongoose");
 
 
-const userSchema = new Schema(
+const messageSchema = new Schema(
   {
-    senting: {
+    sender: {
       type: String
     },
-    receiving: {
+    recipient: {
       type: String
     },
-    message: {
+    subject: {
+      type: String
+    },
+    content: {
       type: String
     },
   },
@@ -23,6 +26,6 @@ const userSchema = new Schema(
 //accept get request from the message collection..
 
 
-const User = model("User", userSchema);
+const Message = model("Message", messageSchema);
 
-module.exports = User;
+module.exports = Message;

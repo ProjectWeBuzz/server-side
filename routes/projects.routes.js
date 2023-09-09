@@ -7,15 +7,20 @@ router.use(express.json());
 
 const Project = require("../models/Project.model");
 
+const fileUploader = require('../config/cloudinary.config');
 
 //  POST /api/projects  -  Creates a new project
 
-router.post("/projects", (req, res, next) => {
-    const { title, description, tags, sociallinksproject, creationdate, private } = req.body;
-    Project.create({ title, description, tags, sociallinksproject, creationdate, private})
+router.post("/projects", fileUploader.single('images'), (req, res, next) => {
+    console.log(req.body, req.file)
+    const { title, description, tags, sociallinksproject, creationdate, isPrivate } = req.body;
+    const imageUrl = req.file.path;
+    Project.create({ title, description, tags, images:imageUrl, sociallinksproject, creationdate, isPrivate})
       .then((response) => res.json(response))
-      .catch((err) => res.json(err));
-      console.log("req.body",req.body)
+      .catch((err) => {
+        console.error('Error creating project:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
   });
 
 

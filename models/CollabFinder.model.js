@@ -5,7 +5,7 @@ const collabSchema = new Schema(
   {
     tags: {
       type: [Schema.Types.ObjectId],
-      ref: "Project" 
+      ref: "Project"
     },
     messaging: {
       type: String,

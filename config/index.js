@@ -16,7 +16,6 @@ const cors = require("cors");
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
 
 
-
 module.exports = function (app) {
   // Middleware setup here
   app.use(logger("dev"));

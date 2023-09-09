@@ -49,7 +49,7 @@ const projectSchema = new Schema(
     // collabs: {
     //     type: [Schema.Types.ObjectId], ref: 'Collab'
     // },
-    private: {
+    isPrivate: {
         type: Boolean,
         default: true
     }

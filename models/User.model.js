@@ -23,6 +23,10 @@ const userSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "Project" 
     },
+    messages: {
+      type: [Schema.Types.ObjectId],
+      ref: "Message" 
+    },
     description: {
       type: String,
       required: false,

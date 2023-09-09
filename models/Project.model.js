@@ -16,12 +16,13 @@ const projectSchema = new Schema(
       required: [true, "Description is required."],
       lowercase: true,
     },
-    // images: {
-    //   type: [String],
-    //   required: false
-    // },
+    images: {
+      type: String,
+      required: false
+    },
     tags: {
       type: [String],
+      maxlength: 50,
       // validate: {
       //   validator: function (array){
       //       return array.length <=5;
@@ -48,7 +49,7 @@ const projectSchema = new Schema(
     // collabs: {
     //     type: [Schema.Types.ObjectId], ref: 'Collab'
     // },
-    private: {
+    isPrivate: {
         type: Boolean,
         default: true
     }

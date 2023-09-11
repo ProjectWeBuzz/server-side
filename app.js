@@ -6,6 +6,8 @@ const databaseUrl = process.env.DATABASE_URL || 'mongodb://localhost/WeBuzz';
 const secretKey = process.env.TOKEN_SECRET;
 
 
+
+
 // ℹ️ Connects to the database
 require("./db");
 

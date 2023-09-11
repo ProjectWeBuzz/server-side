@@ -4,6 +4,7 @@ const app = express();
 app.use(express.json());
 const mongoose = require("mongoose");
 router.use(express.json());
+const cloudinary = require('cloudinary').v2;
 
 const Project = require("../models/Project.model");
 
@@ -11,11 +12,18 @@ const fileUploader = require('../config/cloudinary.config');
 
 //  POST /api/projects  -  Creates a new project
 
-router.post("/projects", fileUploader.single('images'), (req, res, next) => {
-    console.log(req.body, req.file)
+router.post("/projects", fileUploader.array('images',10), async (req, res, next) => {
+    console.log(req.body, req.files)
     const { title, description, tags, sociallinksproject, creationdate, isPrivate } = req.body;
-    const imageUrl = req.file.path;
-    Project.create({ title, description, tags, images:imageUrl, sociallinksproject, creationdate, isPrivate})
+    const imageUrls = [];
+
+    for (const file of req.files) {
+      const { path } = file;
+      const result = await cloudinary.v2.uploader.upload(path);
+      imageUrls.push(result.secure_url);
+    }
+
+    Project.create({ title, description, tags, images:imageUrls, sociallinksproject, creationdate, isPrivate})
       .then((response) => res.json(response))
       .catch((err) => {
         console.error('Error creating project:', err);

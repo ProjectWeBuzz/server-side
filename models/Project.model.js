@@ -18,7 +18,7 @@ const projectSchema = new Schema(
     },
     images: {
       type: String,
-      required: false
+      required: true
     },
     tags: {
       type: [String],

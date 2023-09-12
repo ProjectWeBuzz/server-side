@@ -1,21 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const app = express();
-app.use(express.json());
+
 const mongoose = require("mongoose");
-router.use(express.json());
+
 // const cloudinary = require('cloudinary').v2;
 
 const Project = require("../models/Project.model");
+const User = require("../models/User.model");
+const {isAuthenticated} = require("../middleware/jwt.middleware");
 
 const fileUploader = require('../config/cloudinary.config');
 
 //  POST /api/projects  -  Creates a new project
 
-router.post("/projects", fileUploader.array('images',10), async (req, res, next) => {
+router.post("/projects", isAuthenticated, fileUploader.array('images',10), async (req, res, next) => {
   try {
+    const userId = req.payload._id;
     console.log(req.body, req.files);
-    const { title, description, tags, sociallinksproject, creationdate, isPrivate } = req.body;
+    const { owner, title, description, tags, sociallinksproject, creationdate, isPrivate } = req.body;
     const imageUrls = [];
 
     for (const file of req.files) {
@@ -32,7 +34,11 @@ router.post("/projects", fileUploader.array('images',10), async (req, res, next)
       sociallinksproject,
       creationdate,
       isPrivate,
-    });
+      owner:userId,
+    })
+    .then (dbProject => {
+      return User.findByIdAndUpdate(owner, { $push: { projects: dbProject._id } });
+    })
 
     res.status(201).json(newProject);
   } catch (error) {
@@ -47,7 +53,8 @@ router.post("/projects", fileUploader.array('images',10), async (req, res, next)
 
 router.get("/projects", (req, res, next) => {
     Project.find()
-      //.populate("collabs")
+
+      .populate("owner")
       .then((allProjects) => res.json(allProjects))
       .catch((err) => res.json(err));
   });
@@ -101,11 +108,11 @@ router.delete("/projects/:projectId", (req, res, next) => {
     }
   
     Project.findByIdAndRemove(projectId)
-      .then(() =>
+      .then(() => {
         res.json({
           message: `Project with ${projectId} is removed successfully.`,
-        })
-      )
+        });
+      })
       .catch((error) => res.json(error));
   });
   

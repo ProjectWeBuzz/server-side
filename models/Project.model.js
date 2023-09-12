@@ -1,11 +1,10 @@
+
+const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
 
-const projectSchema = new Schema(
+const projectSchema = new mongoose.Schema(
   {
-    // owner:{
-    //     type: [Schema.Types.ObjectId], ref: 'User'
-    // },
     title: {
       type: String,
       required: [true, "Title is required."],
@@ -23,6 +22,7 @@ const projectSchema = new Schema(
     tags: {
       type: [String],
       maxlength: 50,
+      required: true
       // validate: {
       //   validator: function (array){
       //       return array.length <=5;
@@ -52,9 +52,13 @@ const projectSchema = new Schema(
     isPrivate: {
         type: Boolean,
         default: true
-    }
-    //this should be added through a function
+    },
+    owner:{
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User',
+    },
   },
+    //this should be added through a function
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
@@ -62,6 +66,6 @@ const projectSchema = new Schema(
 );
 
 
-const Project = model("Project", projectSchema);
+const Project = mongoose.model("Project", projectSchema);
 
 module.exports = Project;

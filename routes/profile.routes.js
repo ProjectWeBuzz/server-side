@@ -5,9 +5,8 @@ const User = require('../models/User.model');
 
 
 router.get("/profile/:username", isAuthenticated, async (req, res) => {
-    console.log(req.headers)
-  try {
 
+  try {
       const username = req.params.username;
       const user = await User.findOne({ username: username });
       
@@ -26,20 +25,20 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
    
     try {
     
-      const username = req.params.username;
+      const {username} = req.params;
       const { email, password, description, photo, sociallinks } = req.body;
-     
+     console.log(req.body)
       const updateFields = {
-        email: email || req.user.email,
-        password: password || req.user.password,
-        description: description || req.user.description,
-        photo: photo || req.user.photo,
-        sociallinks: sociallinks || req.user.sociallinks
+        email: email,
+        password: password, 
+        description: description || "",
+        photo: photo ? photo : "",
+        // sociallinks: sociallinks || ""
       };
     
 
-      const updatedUser = await User.findByIdAndUpdate(username, updateFields, { new: true });
-      await updateFields.save();
+      const updatedUser = await User.findOne({ username }, updateFields, { new: true });
+      await updatedUser.save();
       res.json(updatedUser);
       console.log(updatedUser)
 

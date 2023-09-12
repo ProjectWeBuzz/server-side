@@ -1,14 +1,24 @@
 
 const express = require('express');
 const router = express.Router();
-const Message = require('../models/Message');
+const Message = require('../models/Message.model');
+const { isAuthenticated } = require('../middleware/jwt.middleware');
+const User = require('../models/User.model');
 
 // Create a new message
-router.post('/messages/send', async (req, res) => {
+router.post('/:username', isAuthenticated, async (req, res) => {
+ 
   try {
+    const username = req.params.username;
     const { sender, recipient, subject, content } = req.body;
-    const message = new Message({ sender, recipient, subject, content });
+    const message = new Message({ username:username, sender:sender, recipient:recipient, subject:subject, content:content });
     await message.save();
+    //Update the sender of the message with the new message
+    const theSender = await User.findOneAndUpdate({ username:sender }, { $push: { messages: message._id } });
+    console.log("yyyy", theSender)
+    //Update the recipient of the message with a new message
+    await User.findOneAndUpdate({ username:recipient }, { $push: { messages: message._id } });
+
     res.status(201).json(message);
   } catch (error) {
     console.error(error);
@@ -16,12 +26,20 @@ router.post('/messages/send', async (req, res) => {
   }
 });
 
+
 // Get messages for a user
-router.get('/messages/:username', async (req, res) => {
+router.get('/:username', isAuthenticated, async (req, res) => {
+
   try {
-    const { username } = req.params;
-    const messages = await Message.find({ user });
-    res.json(messages);
+    const username = req.params.username;
+    const user = await User.findOne({ username }).populate("messages");
+    console.log(user)
+  
+    // Find messages where the sender or recipient matches the provided username
+    // const messages = await Message.find({
+    //   $or: [{ sender: username }, { recipient: username }],
+    // });
+    // res.json(messages);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });

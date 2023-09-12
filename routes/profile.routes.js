@@ -9,7 +9,8 @@ const User = require('../models/User.model');
 router.get('/profile/:username', isAuthenticated, async (req, res) => {
     try {
         const username = req.params.username;
-
+        const userId = req.payload._id;
+        
         const user = await User.findOne({ username });
   
       if (!user) {

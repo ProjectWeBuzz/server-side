@@ -1,7 +1,8 @@
+const mongoose = require('mongoose');
 const { Schema, model } = require("mongoose");
 
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -19,16 +20,34 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
-    projects: [{
-      type: Schema.Types.ObjectId,
-      ref: "Project" }],
-  },
+    messages: {
+      type: [Schema.Types.ObjectId],
+      ref: "Message" 
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    photo: {
+      type:String,
+      default: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+    },
+    sociallinks: {
+      type: [String],
+    },
+    projects: [
+      { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Project', 
+      },
+    ],
+    },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
 
-const User = model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

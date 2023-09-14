@@ -16,6 +16,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
+
+
+
+
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
   const { email, password, username } = req.body;
@@ -63,13 +67,14 @@ router.post("/signup", (req, res, next) => {
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
-      const { email, username, _id } = createdUser;
+      const { email, username, _id } = createdUser; 
 
       // Create a new object that doesn't expose the password
       const user = { email, username, _id };
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
+      router.redirect("/profile/:username")
     })
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
@@ -98,13 +103,15 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, username } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
+        const payload = { _id, email, username };
 
         // Create a JSON Web Token and sign it
-        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+        const authToken = jwt.sign(payload, 
+          process.env.TOKEN_SECRET, 
+          {
           algorithm: "HS256",
           expiresIn: "6h",
         });

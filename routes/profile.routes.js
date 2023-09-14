@@ -4,6 +4,9 @@ const { isAuthenticated } = require('../middleware/jwt.middleware');
 const User = require('../models/User.model'); 
 
 
+
+// GET /api/profile
+
 router.get("/profile/:username", isAuthenticated, async (req, res) => {
     try {
       const username = req.params.username;

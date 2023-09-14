@@ -1,13 +1,20 @@
 const { Schema, model } = require("mongoose");
 
-
 const messageSchema = new Schema(
   {
     sender: {
-      type: String
+      type: String,
+      required: [true, "Recipient email's is required."],
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
     recipient: {
-      type: String
+      type: String,
+      required: [true, "Recipient email's is required."],
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
     subject: {
       type: String

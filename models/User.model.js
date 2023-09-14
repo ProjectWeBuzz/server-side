@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    messages: {
+      type: [Schema.Types.ObjectId],
+      ref: "Message" 
+    },
     description: {
       type: String,
       required: false,

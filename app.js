@@ -6,6 +6,8 @@ require("dotenv").config();
 // const secretKey = process.env.TOKEN_SECRET;
 
 
+
+
 // ℹ️ Connects to the database
 require("./db");
 

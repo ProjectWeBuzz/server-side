@@ -8,5 +8,5 @@ require('dotenv').config();
 const PORT = process.env.REACT_APP_API_URL || 5005;
 
 app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+  console.log(`Server listening on ${PORT}`);
 });

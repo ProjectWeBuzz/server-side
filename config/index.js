@@ -22,7 +22,7 @@ module.exports = function (app) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  pp.use(cors());
+  app.use(cors());
 
   // Add more middleware or configuration as needed
 

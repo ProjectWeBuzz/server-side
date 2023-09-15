@@ -24,7 +24,7 @@ router.get("/auth/profile/:username", isAuthenticated, async (req, res) => {
   });
 
 
-  router.post("/update-profile/:username", isAuthenticated, async (req, res) => {
+  router.post("auth/update-profile/:username", isAuthenticated, async (req, res) => {
    
     try {
 

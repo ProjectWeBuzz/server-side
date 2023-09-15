@@ -36,8 +36,8 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
       const updateFields = {
         email: email,
         password: password, 
-        description: description || "",
-        photo: photo ? photo : "",
+        // description: description || "",
+        // photo: photo ? photo : "",
         // sociallinks: sociallinks || ""
       };
     

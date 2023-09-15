@@ -7,7 +7,7 @@ const User = require('../models/User.model');
 
 // GET /api/profile
 
-router.get("/profile/:username", isAuthenticated, async (req, res) => {
+router.get("/auth/profile/:username", isAuthenticated, async (req, res) => {
 
   try {
       const username = req.params.username;

@@ -8,14 +8,15 @@ const User = require('../models/User.model');
 // GET /api/profile
 
 router.get("/profile/:username", isAuthenticated, async (req, res) => {
-    try {
+
+  try {
       const username = req.params.username;
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username: username });
       
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      res.json(user);
+      // if (!user) {
+      //   return res.status(404).json({ error: "User not found" });
+      // }
+      res.status(200).json(user);
     } catch (err) {
       console.error("Error fetching user data:", err);
       res.status(500).json({ message: "Server error" });
@@ -24,20 +25,25 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
 
 
   router.post("/update-profile/:username", isAuthenticated, async (req, res) => {
+   
     try {
+
       const  id  = req.user;
+    
+      const {username} = req.params;
       const { email, password, description, photo, sociallinks } = req.body;
-     
+     console.log(req.body)
       const updateFields = {
         email: email,
-        password: password,
-        description: description,
-        photo: photo,
-        sociallinks: sociallinks
-
+        password: password, 
+        description: description || "",
+        photo: photo ? photo : "",
+        // sociallinks: sociallinks || ""
       };
-  
-      const updatedUser = await User.findByIdAndUpdate(id, updateFields, { new: true });
+    
+
+      const updatedUser = await User.findOne({ username }, updateFields, { new: true });
+      await updatedUser.save();
       res.json(updatedUser);
       console.log(updatedUser)
 

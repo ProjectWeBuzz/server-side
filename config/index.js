@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 // unless the request is made from the same domain, by default express wont accept POST requests
 const cors = require("cors");
 
-const FRONTEND_URL = process.env.ORIGIN || "we-hive.netlify.app";
+const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
 
 
 module.exports = function (app) {

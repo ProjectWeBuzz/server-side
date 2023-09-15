@@ -25,15 +25,15 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
 
   router.post("/update-profile/:username", isAuthenticated, async (req, res) => {
     try {
-      const { id } = req.user;
+      const  id  = req.user;
       const { email, password, description, photo, sociallinks } = req.body;
      
       const updateFields = {
-        email: email || req.user.email,
-        password: password || req.user.password,
-        description: description || req.user.description,
-        photo: photo || req.user.photo,
-        sociallinks: sociallinks || req.user.sociallinks
+        email: email,
+        password: password,
+        description: description,
+        photo: photo,
+        sociallinks: sociallinks
 
       };
   

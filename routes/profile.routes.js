@@ -7,10 +7,10 @@ const User = require('../models/User.model');
 
 // GET /api/profile
 
-router.get("/auth/profile/:username", isAuthenticated, async (req, res) => {
+router.get("/profile/:username", isAuthenticated, async (req, res) => {
 
   try {
-      const username = req.params.username;
+      const {username} = req.params;
       const user = await User.findOne({ username: username });
       
       // if (!user) {
@@ -24,7 +24,7 @@ router.get("/auth/profile/:username", isAuthenticated, async (req, res) => {
   });
 
 
-  router.post("auth/update-profile/:username", isAuthenticated, async (req, res) => {
+  router.post("update-profile/:username", isAuthenticated, async (req, res) => {
    
     try {
 

@@ -24,7 +24,7 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
   });
 
 
-  router.post("update-profile/:username", isAuthenticated, async (req, res) => {
+  router.post("/update-profile/:username", isAuthenticated, async (req, res) => {
    
     try {
 
@@ -42,7 +42,7 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
       };
     
 
-      const updatedUser = await User.findOne({ username }, updateFields, { new: true });
+      const updatedUser = await User.findOneAndUpdate({ username }, updateFields, { new: true });
       await updatedUser.save();
       res.json(updatedUser);
       console.log(updatedUser)

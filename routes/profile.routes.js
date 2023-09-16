@@ -28,7 +28,7 @@ router.get("/profile/:username", isAuthenticated, async (req, res) => {
    
     try {
     
-      const {username} = req.params;
+      const {username} = req.params.username;
       const { email, password, description, photo, sociallinks } = req.body;
      console.log(req.body)
       const updateFields = {

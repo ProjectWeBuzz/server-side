@@ -74,7 +74,8 @@ router.post("/signup", (req, res, next) => {
 
       // Send a json response containing the user object
       res.status(201).json({ user: user });
-      res.redirect("/profile/:username")
+      res.redirect(`/profile/${username}`);
+
     })
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
